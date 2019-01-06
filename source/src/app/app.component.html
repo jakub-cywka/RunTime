@@ -1,0 +1,110 @@
+<div class='w-100 h-100 d-flex aling-items-center flex-column'>
+  <div class='jumbotron jumbotron-fluid text-center bg-light'>
+    <div class='container'>
+      <a class='display-4 text-primary font-italic'>
+        Plan your runs and achieve your goals.
+      </a>
+      <p class='lead text-success font-italic'>
+        Now made easier ✔
+      </p>
+    </div>
+  </div>
+  <div class='container mt-5 d-flex justify-content-center align-items-center flex-column'>
+    <div class='input-group input-group-lg'>
+      <select [(ngModel)]='distance' class='custom-select custom-select-lg' id='presetSelect'>
+        <option value='5' selected>
+          5
+        </option>
+        <option value='10'>
+          10
+        </option>
+        <option value='21,0975'>
+          21,0975
+        </option>
+        <option value='42,195'>
+          42,195
+        </option>
+        <option value=' '>
+          I'll use my own
+        </option>
+      </select>
+      <input type='text' class='form-control form-control-lg' (keydown)='submit($event)' [(ngModel)]='distance' placeholder='Or type your own distance here...' />
+      <div class='input-group-append'>
+        <select [(ngModel)]='distanceUnit' class='custom-select custom-select-lg' id='distanceTypeSelect'>
+          <option value='kilometers' selected>
+            Kilometers
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class='input-group input-group-lg mt-5'>
+      <select [(ngModel)]='time' class='custom-select custom-select-lg' id='timeSelect'>
+        <option value='1'>
+          1
+        </option>
+        <option value='2'>
+          2
+        </option>
+        <option value='4'>
+          4
+        </option>
+        <option value='8'>
+          8
+        </option>
+        <option value='15' selected>
+          15
+        </option>
+        <option value='30'>
+          30
+        </option>
+        <option value='45'>
+          45
+        </option>
+        <option value='60'>
+          60
+        </option>
+        <option value='120'>
+          120
+        </option>
+        <option value='240'>
+          240
+        </option>
+        <option value='480'>
+          480
+        </option>
+        <option value=' '>
+          I'll use my own
+        </option>
+      </select>
+      <input type='text' class='form-control form-control-lg' (keydown)='submit($event)' [(ngModel)]='time' placeholder="Or type your own time here..." />
+      <div class='input-group-append'>
+        <select [(ngModel)]='timeUnit' class='custom-select h-100' id='timeSelect'>
+          <option value='hours'>
+            Hours
+          </option>
+          <option value='minutes' selected>
+            Minutes
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class='container mt-5 flex-column d-flex justify-content-center align-items-center'>
+    <div class='container d-flex justify-content-center align-items-center flex-column'>
+      <label for='paceRange'>Here's your pace range: {{pace}} minutes / {{distanceUnit}}</label>
+      <input type='range' class='custom-range' id='paceRange' step='1' [value]='pace' />
+    </div>
+    <div class='container d-flex mt-4 justify-content-center align-items-center flex-column'>
+        <label for='timeRange'>Here's your speed range: {{speed}} {{distanceUnit}}</label>
+        <input type='range' class='custom-range' id='speedRange' step='1' [value]='speed'  />
+      </div>
+  </div>
+</div>
+<router-outlet></router-outlet>
+
+<a>{{speed}}</a><br />
+<a>{{pace}}</a><br />
+<a>{{time}}</a><br />
+<a>{{distance}}</a><br />
+<a>{{timeUnit}}</a><br />
+<a>{{distanceUnit}}</a><br />
