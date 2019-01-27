@@ -3,40 +3,61 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.less']
 })
 export class AppComponent {
-  distance: string;
-  time: string;
-  speed: number;
-  pace: number;
-  distanceUnit: string;
-  timeUnit: string;
-  public submit(event: KeyboardEvent) {
-    if (event.key === 'Enter' && this.time !== '' && this.distance !== '') {
-      if (this.distanceUnit === 'kilometers') {
-        if (this.timeUnit === 'hours') {
+  public distance: number;
+  public time: number;
+
+  public pace: string;
+  public speed: string;
+
+  public unit: string;
+
+  public numberToTimeLike(num: string): string {
+    if (parseFloat(num) < 10) {
+      return `0${num}`;
+    } else if (parseFloat(num) >= 10) {
+      return num;
+    }
+  }
+
+  public convert(event: KeyboardEvent): void {
+    if (event.key === 'Enter') {
+      if (this.unit === 'Hours' && this.distance !== undefined && this.time !== undefined) {
+        if ((this.time * 60 / this.distance).toString().includes('.') === true) {
+          const paceConstant: string = (this.time * 60 / this.distance).toString();
+          const speedConstant: string = (this.distance / this.time).toFixed(2).toString();
           // tslint:disable-next-line:radix
-          this.pace = parseInt(this.time) * 60 / parseInt(this.distance);
-          // tslint:disable-next-line:radix
-          this.speed = parseInt(this.distance) / parseInt(this.time);
+          const minutesConstant: string = paceConstant.substring(0, paceConstant.indexOf('.'));
+          // tslint:disable-next-line:max-line-length
+          const secondsConstant: string = this.numberToTimeLike((parseFloat(paceConstant.substring(paceConstant.indexOf('.'))) * 60).toFixed(0).toString());
+          this.pace = `${minutesConstant}:${secondsConstant} minute(s) / kilometer`;
+          this.speed = `${speedConstant} kilometer(s) / hour`;
+        } else {
+          const paceConstant: string = (this.time * 60 / this.distance).toString();
+          const speedConstant: string = (this.distance / this.time).toString();
+          this.pace = `${paceConstant}:00 minute(s) / kilometer`;
+          this.speed = `${speedConstant} kilometer(s) / hour`;
         }
-        if (this.timeUnit === 'minutes') {
+      }
+      if (this.unit === 'Minutes' && this.distance !== undefined && this.time !== undefined) {
+        if ((this.time / this.distance).toString().includes('.') === true) {
+          const paceConstant: string = (this.time / this.distance).toString();
+          const speedConstant: string = (this.distance / (this.time / 60)).toFixed(2).toString();
           // tslint:disable-next-line:radix
-          this.pace = parseInt(this.time) / parseInt(this.distance);
-          // tslint:disable-next-line:radix
-          this.speed = parseInt(this.distance) / parseInt(this.time) / 60;
+          const minutesConstant: string = paceConstant.substring(0, paceConstant.indexOf('.'));
+          // tslint:disable-next-line:max-line-length
+          const secondsConstant: string = this.numberToTimeLike((parseFloat(paceConstant.substring(paceConstant.indexOf('.'))) * 60).toFixed(0).toString());
+          this.pace = `${minutesConstant}:${secondsConstant} minute(s) / kilometer`;
+          this.speed = `${speedConstant} kilometer(s) / hour`;
+        } else {
+          const paceConstant: string = (this.time / this.distance).toString();
+          const speedConstant: string = (this.distance / (this.time / 60)).toString();
+          this.pace = `${paceConstant}:00 minute(s) / kilometer`;
+          this.speed = `${speedConstant} kilometer(s) / hour`;
         }
       }
     }
-    console.log(
-      `distance: ${this.distance},
-      time: ${this.time},
-      speed: ${this.speed},
-      pace: ${this.pace},
-      distanceUnit: ${this.distanceUnit},
-      timeUnit: ${this.timeUnit}
-      `
-    );
   }
 }
