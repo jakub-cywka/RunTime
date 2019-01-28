@@ -28,6 +28,9 @@ export class AppComponent implements OnInit {
     if (this.distance.toString().includes(',') === true) {
       this.distance = parseFloat(parseFloat(this.distance.toString().replace(',', '.')).toPrecision(5));
     }
+    if (this.time.toString().includes(',') === true) {
+      this.time = parseFloat(parseFloat(this.time.toString().replace(',', '.')).toPrecision(5));
+    }
     if (this.unit === 'Hours' && this.distance !== undefined && this.time !== undefined) {
       if ((this.time * 60 / this.distance).toString().includes('.') === true) {
         const paceConstant: string = (this.time * 60 / this.distance).toString();
