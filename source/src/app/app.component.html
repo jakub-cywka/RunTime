@@ -1,4 +1,4 @@
-<div class='w-100'>
+<div *ngIf='language === "en-US"' class='w-100 h-95'>
   <div class='hero w-100 is-primary is-bold'>
     <div class='hero-body'>
       <div class='container'>
@@ -11,7 +11,7 @@
       </div>
     </div>
   </div>
-  <div class='container p-x-32 is-flex is-flex-column has-items-vertical-centered'>
+  <div class='container h-100 p-x-32 is-flex is-flex-column has-items-vertical-centered'>
     <div class='field has-addons m-t-64'>
       <div class='control'>
         <input (keydown)='convert($event)' [(ngModel)]='distance' type='text' class='input is-primary is-large' />
@@ -29,24 +29,27 @@
       <div class='control'>
         <span class='select is-large'>
           <select [(ngModel)]='unit'>
-            <option>
+            <option value='Minutes'>
               Minutes
             </option>
-            <option selected>
+            <option selected aria-selected='true' value='Hours'>
               Hours
             </option>
           </select>
         </span>
       </div>
     </div>
-    <nav *ngIf='pace !== undefined && speed !== undefined' class='m-t-32 level'>
+    <button (click)='calculate()' class='button is-success is-medium'>
+      Convert!
+    </button>
+    <nav *ngIf='pace !== undefined && speed !== undefined && pace !== NaN && speed !== NaN' class='m-t-32 level'>
       <div class='level-item has-text-centered p-x-32'>
         <div>
           <p class='heading'>
             Pace
           </p>
           <p class='title is-size-4'>
-            {{pace}}
+            {{pace}} minute(s) / kilometer
           </p>
         </div>
       </div>
@@ -56,18 +59,79 @@
             Speed
           </p>
           <p class='title is-size-4'>
-            {{speed}}
+            {{speed}} kilometer(s) / hour
           </p>
         </div>
       </div>
     </nav>
-    <footer class='footer w-100'>
-      <div class='content has-text-centered'>
-        <p>
-          Made with ❤ and&nbsp;<a href='https://angular.io' target='_blank' class='is-link'>@Angular</a>.<br />
-          Made for runners, by&nbsp;<a href='https://github.com/jakub-cywka' target='_blank' class='is-link'>runner</a>
-        </p>
+  </div>
+</div>
+
+<div *ngIf='language === "pl-PL"' class='w-100 h-95'>
+  <div class='hero w-100 is-primary is-bold'>
+    <div class='hero-body'>
+      <div class='container'>
+        <h1 class='title'>
+          RunTime
+        </h1>
+        <h2 class='subtitle'>
+          Zarządzaj swoimi parametrami biegowymi i osiągaj swoje cele w prędkości i czasie, jakich chcesz ✔
+        </h2>
       </div>
-    </footer>
+    </div>
+  </div>
+  <div class='container h-100 p-x-32 is-flex is-flex-column has-items-vertical-centered'>
+    <div class='field has-addons m-t-64'>
+      <div class='control'>
+        <input (keydown)='convert($event)' [(ngModel)]='distance' type='text' class='input is-primary is-large' />
+      </div>
+      <div class='control'>
+        <a class='button is-static is-large'>
+          Kilometr(ów)
+        </a>
+      </div>
+    </div>
+    <div class='field has-addons m-t-32'>
+      <div class='control'>
+        <input (keydown)='convert($event)' [(ngModel)]='time' type='text' class='input is-info is-large' />
+      </div>
+      <div class='control'>
+        <span class='select is-large'>
+          <select [(ngModel)]='unit'>
+            <option value='Minutes'>
+              Minut(y)
+            </option>
+            <option selected aria-selected='true' value='Hours'>
+              Godzin(y)
+            </option>
+          </select>
+        </span>
+      </div>
+    </div>
+    <button (click)='calculate()' class='button is-success is-medium'>
+      Konwertuj!
+    </button>
+    <nav *ngIf='pace !== undefined && speed !== undefined && pace !== NaN && speed !== NaN' class='m-t-32 level'>
+      <div class='level-item has-text-centered p-x-32'>
+        <div>
+          <p class='heading'>
+            Tempo
+          </p>
+          <p class='title is-size-4'>
+            {{pace}} minut(y) / kilometr
+          </p>
+        </div>
+      </div>
+      <div class='level-item has-text-centered p-x-32'>
+        <div>
+          <p class='heading'>
+            Prędkość
+          </p>
+          <p class='title is-size-4'>
+            {{speed}} kilometr(y) / godzinę
+          </p>
+        </div>
+      </div>
+    </nav>
   </div>
 </div>
